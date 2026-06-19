@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Smooth scrollbar for chat */
+.chat-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.chat-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chat-scroll::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 2px;
+}
+
+/* Markdown inside AI messages */
+.ai-message h1,
+.ai-message h2,
+.ai-message h3 {
+  font-weight: 700;
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+.ai-message h2 {
+  font-size: 1rem;
+}
+.ai-message p {
+  margin: 0.4rem 0;
+  line-height: 1.6;
+}
+.ai-message ul,
+.ai-message ol {
+  padding-left: 1.25rem;
+  margin: 0.4rem 0;
+}
+.ai-message li {
+  margin: 0.2rem 0;
+  line-height: 1.6;
+}
+.ai-message strong {
+  font-weight: 700;
+}
+.ai-message em {
+  font-style: italic;
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+.ai-message hr {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 0.75rem 0;
+}
+.ai-message code {
+  background: #f3f4f6;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  font-size: 0.85rem;
+}
+
+/* Streaming cursor blink */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.streaming-cursor::after {
+  content: '▋';
+  animation: blink 1s step-start infinite;
+  color: #6B0F1A;
+  margin-left: 1px;
+}

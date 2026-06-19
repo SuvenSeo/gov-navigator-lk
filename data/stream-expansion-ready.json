@@ -1,0 +1,243 @@
+[
+  {
+    "id": "business-registration-sole",
+    "title": "Business Registration (Sole Proprietorship)",
+    "sinhala": "ව්‍යාපාර ලියාපදිංචිය (තනි අයිතිකාරත්වය)",
+    "category": "Local Services",
+    "emoji": "🏪",
+    "description": "Register a sole proprietorship business name at your Divisional Secretariat within 14 days of starting trade.",
+    "department": "Divisional Secretariat / Registrar of Business Names",
+    "offices": [
+      { "name": "Your Divisional Secretariat", "address": "Nearest DS office to your business address", "phone": "Varies by district" }
+    ],
+    "documents_required": [
+      "National Identity Card (NIC) — original + copy",
+      "Completed Business Registration Form (from DS office)",
+      "Proof of business address (utility bill or rental agreement)",
+      "Two passport-size photographs"
+    ],
+    "steps": [
+      "Choose your business name and check it is not already registered",
+      "Collect the registration form from your Divisional Secretariat",
+      "Submit the form with NIC and address proof within 14 days of commencing business",
+      "Pay the registration fee at the DS cashier",
+      "Collect your Business Registration Certificate"
+    ],
+    "fees": {
+      "registration": "LKR 2,000–5,000 (varies by district)"
+    },
+    "processing_time": "Same day to 3 working days",
+    "online_available": false,
+    "online_url": "https://www.gov.lk",
+    "tips": [
+      "You must register within 14 days of starting business — late registration can incur fines",
+      "Keep copies of the certificate — banks require it to open a business account"
+    ],
+    "common_mistakes": [
+      "Starting trade before registering the business name",
+      "Using a name too similar to an existing registered business"
+    ]
+  },
+  {
+    "id": "land-title-registration",
+    "title": "Land / Property Title Registration",
+    "sinhala": "ඉඩම් / දේපල මාර්ගගත ලියාපදිංචිය",
+    "category": "Legal",
+    "emoji": "🏠",
+    "description": "Register or transfer ownership of land and property through the Land Registry.",
+    "department": "Land Registry Department",
+    "offices": [
+      { "name": "Land Registry — Colombo", "address": "No. 59, Malalasekara Mawatha, Colombo 07", "phone": "+94 11 2697501" },
+      { "name": "Provincial Land Registry offices", "address": "Major towns island-wide", "phone": "Varies" }
+    ],
+    "documents_required": [
+      "Original Title Deed (or prior registration documents)",
+      "National Identity Card of all parties",
+      "Survey plan approved by Survey Department (if new subdivision)",
+      "Stamp duty payment receipt",
+      "Notarized transfer deed (for sales/gifts)"
+    ],
+    "steps": [
+      "Engage a notary to prepare the transfer deed",
+      "Pay stamp duty at a designated bank",
+      "Submit documents at the relevant Land Registry office",
+      "Registry verifies title chain and survey details",
+      "Collect registered title upon approval"
+    ],
+    "fees": {
+      "registration": "Varies by property value (stamp duty + registration fees)"
+    },
+    "processing_time": "4–8 weeks (complex cases longer)",
+    "online_available": false,
+    "online_url": "https://www.land.gov.lk",
+    "tips": [
+      "Always verify the title chain with a lawyer before purchasing property",
+      "Survey plan must match physical boundaries — disputes are common"
+    ],
+    "common_mistakes": [
+      "Missing stamp duty payment before submission",
+      "Title deed names not matching NIC spelling exactly"
+    ]
+  },
+  {
+    "id": "income-tax-tin",
+    "title": "Income Tax Filing / TIN Registration",
+    "sinhala": "ආදායම් බදු / TIN ලියාපදිංචිය",
+    "category": "Local Services",
+    "emoji": "📊",
+    "description": "Obtain a Tax Identification Number (TIN) and file annual income tax returns with the Inland Revenue Department.",
+    "department": "Inland Revenue Department (IRD)",
+    "offices": [
+      { "name": "IRD Head Office", "address": "Sir Chittampalam A. Gardiner Mawatha, Colombo 02", "phone": "+94 11 2135222" },
+      { "name": "Regional IRD offices", "address": "Major cities island-wide", "phone": "Varies" }
+    ],
+    "documents_required": [
+      "National Identity Card (NIC)",
+      "Proof of address",
+      "Employment letter or business registration (if self-employed)",
+      "Bank statements and income records for tax filing",
+      "WHT certificates (if applicable)"
+    ],
+    "steps": [
+      "Register for a TIN online at irdezfile.ird.gov.lk or at an IRD office",
+      "Maintain records of all income and allowable deductions",
+      "File annual return before the IRD deadline (usually 30 November)",
+      "Pay any tax due via bank or online",
+      "Keep acknowledgement receipt for 6 years"
+    ],
+    "fees": {
+      "tin_registration": "Free",
+      "late_filing_penalty": "Varies — penalties apply for late returns"
+    },
+    "processing_time": "TIN: same day online; Return processing: weeks to months if audited",
+    "online_available": true,
+    "online_url": "https://irdezfile.ird.gov.lk",
+    "tips": [
+      "File before the deadline even if you cannot pay — reduces penalties",
+      "Keep all WHT certificates from employers and banks"
+    ],
+    "common_mistakes": [
+      "Not registering for TIN when starting self-employment",
+      "Declaring incorrect income — triggers audit and penalties"
+    ]
+  },
+  {
+    "id": "aswesuma-welfare",
+    "title": "Aswesuma Welfare Benefits",
+    "sinhala": "අස්වැසුම සුබසාධන ප්‍රතිලාභ",
+    "category": "Local Services",
+    "emoji": "🤝",
+    "description": "Apply for social welfare cash transfers under the Aswesuma programme for eligible low-income households.",
+    "department": "Department of Samurdhi / Welfare Benefits Board",
+    "offices": [
+      { "name": "Divisional Secretariat", "address": "Your local DS office", "phone": "Varies" },
+      { "name": "Grama Niladhari office", "address": "Your GN division", "phone": "N/A" }
+    ],
+    "documents_required": [
+      "National Identity Card of household head",
+      "Birth certificates of all household members",
+      "Proof of income (or lack thereof)",
+      "Grama Niladhari verification of household composition",
+      "Bank account details for benefit transfer"
+    ],
+    "steps": [
+      "Check eligibility criteria on the official welfare portal or at DS office",
+      "Collect application form during registration window",
+      "GN officer verifies household details (may include home visit)",
+      "Submit completed form to Divisional Secretariat",
+      "Await SMS/letter notification of approval and payment schedule"
+    ],
+    "fees": {
+      "application": "Free"
+    },
+    "processing_time": "4–12 weeks depending on verification cycle",
+    "online_available": true,
+    "online_url": "https://www.gov.lk",
+    "tips": [
+      "Ensure all family members are listed — missing members can delay approval",
+      "Update the GN if your household composition changes"
+    ],
+    "common_mistakes": [
+      "Incomplete household member list on application",
+      "Not updating bank account details after approval"
+    ]
+  },
+  {
+    "id": "company-registration-eroc",
+    "title": "Pvt Ltd Company Registration (eROC)",
+    "sinhala": "පුද්ගලික සමාගම් ලියාපදිංචිය (eROC)",
+    "category": "Local Services",
+    "emoji": "🏢",
+    "description": "Incorporate a private limited company online through the eROC portal.",
+    "department": "Department of Registrar of Companies",
+    "offices": [
+      { "name": "Registrar of Companies", "address": "Level 12, West Tower, World Trade Center, Colombo 01", "phone": "+94 11 2689210" }
+    ],
+    "documents_required": [
+      "Proposed company name (3 options)",
+      "Articles of Association",
+      "Form 1 (Company registration)",
+      "NIC/passport copies of all directors and shareholders",
+      "Registered office address proof",
+      "Consent letters from directors (Form 18)"
+    ],
+    "steps": [
+      "Reserve company name on eroc.drc.gov.lk",
+      "Prepare Articles of Association (often via company secretary)",
+      "Submit incorporation documents online with fees",
+      "ROC reviews and issues Certificate of Incorporation",
+      "Register for TIN and EPF within statutory deadlines"
+    ],
+    "fees": {
+      "incorporation": "LKR 15,000–30,000+ (depends on share capital and services)"
+    },
+    "processing_time": "3–10 working days online",
+    "online_available": true,
+    "online_url": "https://eroc.drc.gov.lk",
+    "tips": [
+      "Engage a certified company secretary — required for Pvt Ltd incorporation",
+      "Register for TIN and EPF immediately after incorporation"
+    ],
+    "common_mistakes": [
+      "Name reservation expiring before full submission",
+      "Missing director consent forms (Form 18)"
+    ]
+  },
+  {
+    "id": "traffic-fine-payment",
+    "title": "Traffic Fine Payment (GovPay)",
+    "sinhala": "මාර්ග රාධාරණ දඩ ගෙවීම (GovPay)",
+    "category": "Legal",
+    "emoji": "🚔",
+    "description": "Pay police traffic spot fines instantly via mobile banking through the GovPay platform.",
+    "department": "Sri Lanka Police / ICTA GovPay",
+    "offices": [
+      { "name": "Any police station island-wide", "address": "678 police stations with mobile devices", "phone": "119" }
+    ],
+    "documents_required": [
+      "Spot fine receipt issued by officer (with reference number)",
+      "NIC or driving license (for verification if paying in person)"
+    ],
+    "steps": [
+      "Receive spot fine slip from traffic officer with payment reference",
+      "Open your bank or fintech app with GovPay integration",
+      "Enter fine reference number and confirm amount",
+      "Complete payment — officer receives confirmation electronically",
+      "Keep digital receipt"
+    ],
+    "fees": {
+      "fine_amount": "As stated on spot fine slip"
+    },
+    "processing_time": "Instant upon successful payment",
+    "online_available": true,
+    "online_url": "https://govpay.lk",
+    "tips": [
+      "Pay promptly — unresolved fines can affect license renewal",
+      "GovPay works with most major Sri Lankan banks and fintech apps"
+    ],
+    "common_mistakes": [
+      "Entering wrong reference number in banking app",
+      "Losing the paper slip before payment"
+    ]
+  }
+]
