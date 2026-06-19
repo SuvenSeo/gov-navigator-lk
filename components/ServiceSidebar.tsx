@@ -1,6 +1,7 @@
 'use client'
 
 import LionMotif from '@/components/LionMotif'
+import { SearchIcon } from '@/components/Icons'
 import {
   categories,
   getBrowsableByCategory,
@@ -8,7 +9,7 @@ import {
   searchBrowsable,
   type BrowsableService,
 } from '@/lib/knowledge'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 interface ServiceSidebarProps {
   onSelectService: (query: string) => void
@@ -78,6 +79,16 @@ export default function ServiceSidebar({
   const searchResults = useMemo(() => searchBrowsable(search), [search])
   const isSearching = search.trim().length > 0
 
+  // Close the mobile drawer on Escape
+  useEffect(() => {
+    if (!mobileOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose?.()
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [mobileOpen, onClose])
+
   const handleServiceClick = (title: string) => {
     onSelectService(`How do I get a ${title}?`)
     setSearch('')
@@ -109,18 +120,16 @@ export default function ServiceSidebar({
           </span>
         </div>
         <div className="relative">
-          <span
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 text-xs"
-            aria-hidden
-          >
-            🔍
-          </span>
+          <SearchIcon
+            size={15}
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none"
+          />
           <input
             type="search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search services..."
-            className="w-full rounded-xl bg-white/10 border border-white/15 pl-8 pr-3 py-2.5 text-xs text-white placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-lk-gold/50 focus:border-lk-gold/30 transition-all duration-200"
+            className="w-full rounded-xl bg-white/10 border border-white/15 pl-9 pr-3 py-2.5 text-xs text-white placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-lk-gold/50 focus:border-lk-gold/30 transition-all duration-200"
             aria-label="Search government services"
           />
         </div>

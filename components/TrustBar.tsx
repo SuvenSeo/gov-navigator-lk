@@ -1,11 +1,12 @@
 'use client'
 
 import LkTricolorBar from '@/components/LkTricolorBar'
+import { CheckBadgeIcon, PhoneIcon, ShieldIcon } from '@/components/Icons'
 
 const TRUST_ITEMS = [
-  { icon: '📞', label: 'GIC', value: '1919', href: 'https://gic.gov.lk' },
-  { icon: '✓', label: 'Data', value: 'Verified', href: 'https://gic.gov.lk' },
-  { icon: '🔒', label: 'Privacy', value: 'No NIC stored', href: undefined },
+  { Icon: PhoneIcon, label: 'GIC', value: '1919', href: 'https://gic.gov.lk' },
+  { Icon: CheckBadgeIcon, label: 'Data', value: 'Verified', href: 'https://gic.gov.lk' },
+  { Icon: ShieldIcon, label: 'Privacy', value: 'No NIC stored', href: undefined },
 ]
 
 export default function TrustBar() {
@@ -15,12 +16,12 @@ export default function TrustBar() {
       <div className="bg-lk-sand/90 dark:bg-lk-night-card/95 backdrop-blur-sm border-t border-lk-maroon/8 dark:border-lk-gold/10 px-4 md:px-6 py-2 transition-colors duration-300">
         <div className="flex flex-wrap items-center justify-between gap-2 text-[10px]">
           <div className="flex flex-wrap items-center gap-2">
-            {TRUST_ITEMS.map(({ icon, label, value, href }) => (
+            {TRUST_ITEMS.map(({ Icon, label, value, href }) => (
               <div
                 key={label}
-                className="flex items-center gap-1 bg-white/70 dark:bg-lk-night-elevated/80 border border-lk-maroon/8 dark:border-lk-gold/12 rounded-full px-2.5 py-0.5"
+                className="flex items-center gap-1.5 bg-white/70 dark:bg-lk-night-elevated/80 border border-lk-maroon/8 dark:border-lk-gold/12 rounded-full px-2.5 py-0.5"
               >
-                <span aria-hidden>{icon}</span>
+                <Icon size={12} className="text-lk-maroon/70 dark:text-lk-gold-light/70" strokeWidth={2} />
                 <span className="text-gray-500 dark:text-lk-cream/50">{label}:</span>
                 {href ? (
                   <a
@@ -37,9 +38,16 @@ export default function TrustBar() {
               </div>
             ))}
           </div>
-          <p className="text-[10px] text-gray-400 dark:text-lk-cream/35 font-sinhala hidden sm:block">
-            GovNav LK රජයේ ආයතනයක් නොවේ
-          </p>
+          <div className="flex items-center gap-1.5 text-[10px]">
+            <span className="inline-flex items-center gap-1.5 font-semibold text-lk-maroon dark:text-lk-gold-light">
+              <span className="w-1.5 h-1.5 rounded-full bg-lk-saffron flex-shrink-0" aria-hidden />
+              Not official · Verify at office
+            </span>
+            <span className="text-gray-300 dark:text-lk-cream/20 hidden sm:inline">·</span>
+            <span className="text-gray-400 dark:text-lk-cream/35 font-sinhala hidden sm:inline">
+              GovCompanion රජයේ ආයතනයක් නොවේ
+            </span>
+          </div>
         </div>
       </div>
     </footer>

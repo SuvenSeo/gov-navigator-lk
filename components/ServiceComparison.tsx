@@ -2,7 +2,7 @@
 
 import { compareServices, getQuickRecommendation } from '@/lib/compareServices'
 import { services } from '@/lib/knowledge'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 interface ServiceComparisonProps {
   open: boolean
@@ -14,6 +14,21 @@ export default function ServiceComparison({ open, onClose }: ServiceComparisonPr
   const [idB, setIdB] = useState('')
   const [mounted, setMounted] = useState(false)
   const [exiting, setExiting] = useState(false)
+  const dialogRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', onKey)
+    // Move focus into the dialog for keyboard/screen-reader users
+    const t = setTimeout(() => dialogRef.current?.focus(), 50)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      clearTimeout(t)
+    }
+  }, [open, onClose])
 
   useEffect(() => {
     if (open) {
@@ -64,10 +79,13 @@ export default function ServiceComparison({ open, onClose }: ServiceComparisonPr
         aria-label="Close comparison"
       />
       <div
-        className={`relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-lk-night-elevated rounded-2xl shadow-2xl border border-lk-maroon/10 dark:border-lk-gold/20 ${
+        ref={dialogRef}
+        tabIndex={-1}
+        className={`relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-lk-night-elevated rounded-2xl shadow-2xl border border-lk-maroon/10 dark:border-lk-gold/20 outline-none ${
           exiting ? 'animate-modal-out' : 'animate-modal-in'
         }`}
         role="dialog"
+        aria-modal="true"
         aria-labelledby="compare-title"
       >
         <div className="sticky top-0 bg-lk-maroon dark:bg-gradient-to-r dark:from-lk-maroon-dark dark:to-lk-night-card text-white px-5 py-4 rounded-t-2xl flex items-center justify-between z-10">

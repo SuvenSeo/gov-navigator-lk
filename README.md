@@ -1,12 +1,14 @@
-# GovNav LK
+# GovCompanion
 
-**Sri Lanka's AI-powered government service navigator** — ask about NIC, passport, driving licences, certificates, and 100+ more services. Get documents, fees, offices, and steps in seconds.
+**Your Trusted Government Services Companion** — Government services made simple & clear.
 
-**Live:** https://gov-navigator-lk.vercel.app
+Ask about NIC, passport, driving licences, certificates, and 100+ more government services. Get documents, fees, offices, and steps in seconds.
 
-## Problem
+**Live:** https://govcompanion.lk
 
-22 million Sri Lankans navigate fragmented government portals with conflicting information. One wrong document means a wasted day at Battaramulla. GovNav is the bridge until national digital services mature.
+## Why GovCompanion?
+
+22 million Sri Lankans navigate fragmented government portals with conflicting information. One wrong document means a wasted day at Battaramulla. **GovCompanion** is your trusted guide — clear answers, verified sources, and peace of mind. Saves 2–4 hours per service request.
 
 ## Features
 
@@ -35,6 +37,16 @@ npm install
 cp .env.example .env.local   # add at least one AI provider key
 npm run dev
 ```
+
+## Brand
+
+**GovCompanion** is positioned as a premium, trusted government services guide for Sri Lanka. For full brand guidelines, see `BRANDING.md`.
+
+### Key Principles
+- **Simple & Clear**: No jargon, every citizen understands
+- **Trustworthy**: Verified sources, official connections (GIC 1919, drp.gov.lk, immigration.gov.lk)
+- **Empowering**: You're never alone navigating government
+- **Local & Proud**: Rooted in Sri Lankan identity
 
 ## Built with Cursor
 

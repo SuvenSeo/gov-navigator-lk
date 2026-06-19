@@ -2,10 +2,11 @@
 
 import LionMotif from '@/components/LionMotif'
 import LkTricolorBar from '@/components/LkTricolorBar'
+import { ClockIcon, LayersIcon, PhoneIcon, UsersIcon } from '@/components/Icons'
 import { getTotalServiceCount } from '@/lib/knowledge'
 import { useEffect, useState } from 'react'
 
-const STORAGE_KEY = 'govnav-hero-dismissed'
+const STORAGE_KEY = 'govcompanion-hero-dismissed'
 
 interface HeroSectionProps {
   onStartQuery: () => void
@@ -18,10 +19,10 @@ export default function HeroSection({ onStartQuery, onVisibilityChange }: HeroSe
   const total = getTotalServiceCount()
 
   const stats = [
-    { icon: '🦁', value: `${total}+`, label: 'Services' },
-    { icon: '🇱🇰', value: '22M', label: 'Citizens' },
-    { icon: '⏱️', value: '2–4h', label: 'Saved' },
-    { icon: '📞', value: '1919', label: 'GIC' },
+    { Icon: LayersIcon, value: `${total}+`, label: 'Services' },
+    { Icon: UsersIcon, value: '22M', label: 'Citizens' },
+    { Icon: ClockIcon, value: '2–4h', label: 'Saved' },
+    { Icon: PhoneIcon, value: '1919', label: 'GIC' },
   ]
 
   useEffect(() => {
@@ -82,8 +83,8 @@ export default function HeroSection({ onStartQuery, onVisibilityChange }: HeroSe
 
   return (
     <div
-      className={`flex-shrink-0 overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-        closing ? 'max-h-0 opacity-0' : 'max-h-[220px] md:max-h-[148px] opacity-100'
+      className={`flex-shrink-0 overflow-hidden transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        closing ? 'max-h-0 opacity-0' : 'max-h-[340px] md:max-h-[148px] opacity-100'
       }`}
     >
       <section className="hero-batik relative overflow-hidden">
@@ -111,25 +112,25 @@ export default function HeroSection({ onStartQuery, onVisibilityChange }: HeroSe
               <LionMotif size={44} variant="gold" className="flex-shrink-0 hidden sm:block animate-float" />
               <div className="min-w-0 text-left">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-lk-gold-light/90 mb-1">
-                  Sri Lanka&apos;s AI Government Guide
+                  Your Government Services Companion
                 </p>
                 <h2 className="text-lg sm:text-xl md:text-2xl font-black leading-tight tracking-tight">
-                  Never waste a day at a{' '}
-                  <span className="text-lk-gold-light">government office</span> again
+                  Government services made{' '}
+                  <span className="text-lk-gold-light">simple & clear</span>
                 </h2>
                 <p className="font-sinhala text-xs md:text-sm text-white/70 mt-1 truncate">
-                  ලේසියෙන්ම රජයේ සේවාවන් ලබා ගන්නේ කෙසේද?
+                  රජයේ සේවා දැන් සරලයි, පැහැදිලියි
                 </p>
               </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-2 md:gap-2.5 md:flex-shrink-0">
-              {stats.map(({ icon, value, label }) => (
+              {stats.map(({ Icon, value, label }) => (
                 <div
                   key={label}
                   className="inline-flex items-center gap-1.5 text-[10px] font-bold border border-lk-gold/35 bg-white/8 backdrop-blur-sm px-2.5 py-1.5 rounded-lg"
                 >
-                  <span aria-hidden>{icon}</span>
+                  <Icon size={13} className="text-lk-gold-light/80" strokeWidth={2} />
                   <span className="text-lk-gold-light">{value}</span>
                   <span className="text-white/50 font-medium uppercase">{label}</span>
                 </div>

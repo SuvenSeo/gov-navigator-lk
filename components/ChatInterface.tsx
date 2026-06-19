@@ -1,8 +1,11 @@
 'use client'
 
 import ColoredMarkdown from '@/components/ColoredMarkdown'
+import LionMotif from '@/components/LionMotif'
 import RateLimitBadge from '@/components/RateLimitBadge'
 import VerifiedSourceChip from '@/components/VerifiedSourceChip'
+import { SendIcon, UserIcon } from '@/components/Icons'
+import { getFallbackAnswer, GENERIC_FALLBACK } from '@/lib/fallbackAnswers'
 import { getSessionHeaders } from '@/lib/client-session'
 import { matchServiceFromQuery } from '@/lib/matchServiceFromQuery'
 import { useChat } from 'ai/react'
@@ -16,19 +19,11 @@ const QUICK_QUESTIONS = [
   'How do I get a police clearance?',
 ]
 
-const WELCOME_MESSAGE = `👋 **ආයුබෝවන්! Welcome to GovNav LK**
+const WELCOME_MESSAGE = `**ආයුබෝවන් — Welcome to GovCompanion**
 
-I'm your AI guide to **Sri Lankan government services** — NIC, passport, driving licence, Grama Niladhari certificates, and more.
+I'm your guide to **Sri Lankan government services** — NIC, passport, driving licence, birth & marriage certificates, police clearance, and Grama Niladhari certificates.
 
-**What I can help with:**
-- 🪪 **NIC** — new, replacement, or updates
-- ✈️ **Passport** — new, renewal, express
-- 🚗 **Driving licence** — learner's, full, renewal
-- 📋 **Birth & marriage certificates**
-- ⚖️ **Police clearance** — local or overseas
-- 🏛️ **Grama Niladhari** — residency, character, income
-
-Tell me what you need — I'll give you the documents, office location, fees, and steps. **No more wasted trips to Battaramulla!** 🇱🇰`
+Tell me what you need and I'll give you the exact **documents to bring, the office to visit, the fees, and the steps** — so you never waste a day in a queue.`
 
 export interface ChatInterfaceRef {
   submitMessage: (text: string) => void
@@ -38,12 +33,14 @@ export interface ChatInterfaceRef {
 const ChatInterface = forwardRef<ChatInterfaceRef>((_, ref) => {
   const [rateLimitError, setRateLimitError] = useState<string | null>(null)
   const [retryAfter, setRetryAfter] = useState<number | null>(null)
+  const lastQueryRef = useRef<string>('')
 
   const { messages, input, handleInputChange, handleSubmit, isLoading, append, setMessages } =
     useChat({
       api: '/api/chat',
       headers: getSessionHeaders(),
       onError: (error) => {
+        // 1) Rate limit — show the cooldown banner, no fallback answer.
         try {
           const parsed = JSON.parse(error.message)
           if (parsed.error === 'rate_limit_exceeded') {
@@ -59,7 +56,16 @@ const ChatInterface = forwardRef<ChatInterfaceRef>((_, ref) => {
             'You have reached the message limit for now. Please wait a few minutes.',
           )
           setRetryAfter(60)
+          return
         }
+        // 2) All AI providers down — serve a data-accurate offline answer so the
+        //    most common questions still work (demo-safety net).
+        const canned = getFallbackAnswer(lastQueryRef.current) ?? GENERIC_FALLBACK
+        const id =
+          typeof crypto !== 'undefined' && crypto.randomUUID
+            ? crypto.randomUUID()
+            : `fallback-${messages.length}-${lastQueryRef.current.length}`
+        setMessages((prev) => [...prev, { id, role: 'assistant', content: canned }])
       },
       onFinish: () => {
         setRateLimitError(null)
@@ -73,6 +79,7 @@ const ChatInterface = forwardRef<ChatInterfaceRef>((_, ref) => {
   useImperativeHandle(ref, () => ({
     submitMessage: (text: string) => {
       if (rateLimitError) return
+      lastQueryRef.current = text
       append({ role: 'user', content: text })
     },
     focusInput: () => {
@@ -100,10 +107,16 @@ const ChatInterface = forwardRef<ChatInterfaceRef>((_, ref) => {
     return () => clearInterval(t)
   }, [retryAfter])
 
+  const onFormSubmit = (e: React.FormEvent) => {
+    lastQueryRef.current = input
+    handleSubmit(e)
+  }
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
       if (input.trim() && !isLoading && !rateLimitError) {
+        lastQueryRef.current = input
         handleSubmit(e as unknown as React.FormEvent)
       }
     }
@@ -125,12 +138,12 @@ const ChatInterface = forwardRef<ChatInterfaceRef>((_, ref) => {
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
       <div className="flex items-center justify-between px-4 md:px-8 py-2.5 border-b border-lk-maroon/8 dark:border-lk-gold/10 bg-white/60 dark:bg-lk-night-card/80 backdrop-blur-md transition-colors duration-300">
-        <p className="text-xs text-gray-600 hidden sm:flex items-center gap-2">
-          <span className="inline-flex items-center gap-1 bg-lk-maroon/5 text-lk-maroon px-2 py-0.5 rounded-full font-medium">
+        <p className="text-xs text-gray-600 dark:text-lk-cream/60 hidden sm:flex items-center gap-2">
+          <span className="inline-flex items-center gap-1 bg-lk-maroon/5 dark:bg-lk-gold/10 text-lk-maroon dark:text-lk-gold-light px-2 py-0.5 rounded-full font-medium">
             EN
           </span>
-          <span className="text-gray-300">|</span>
-          <span className="font-sinhala inline-flex items-center gap-1 bg-lk-emerald/10 text-lk-emerald px-2 py-0.5 rounded-full font-medium">
+          <span className="text-gray-300 dark:text-lk-cream/20">|</span>
+          <span className="font-sinhala inline-flex items-center gap-1 bg-lk-emerald/10 dark:bg-lk-emerald-light/15 text-lk-emerald dark:text-lk-emerald-light px-2 py-0.5 rounded-full font-medium">
             සිංහල
           </span>
         </p>
@@ -140,7 +153,7 @@ const ChatInterface = forwardRef<ChatInterfaceRef>((_, ref) => {
             <button
               type="button"
               onClick={clearChat}
-              className="text-[10px] text-gray-400 hover:text-lk-maroon px-2 py-1 rounded-lg hover:bg-lk-maroon/5 transition-all duration-200"
+              className="text-[10px] text-gray-400 dark:text-lk-cream/45 hover:text-lk-maroon dark:hover:text-lk-gold-light px-2 py-1 rounded-lg hover:bg-lk-maroon/5 dark:hover:bg-lk-gold/10 transition-all duration-200"
             >
               New chat
             </button>
@@ -148,10 +161,11 @@ const ChatInterface = forwardRef<ChatInterfaceRef>((_, ref) => {
         </div>
       </div>
 
-      <div ref={scrollRef} className="flex-1 overflow-y-auto chat-scroll px-4 md:px-8 py-6 space-y-5">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto chat-scroll px-4 md:px-8 py-6">
+        <div className="mx-auto w-full max-w-6xl space-y-5">
         <div className="flex gap-3 message-enter">
           <Avatar role="assistant" />
-          <div className="ai-message lk-chat-bubble-ai px-4 py-3 max-w-2xl">
+          <div className="ai-message lk-chat-bubble-ai px-5 py-4 flex-1 min-w-0 max-w-[60rem]">
             <ColoredMarkdown content={WELCOME_MESSAGE} />
           </div>
         </div>
@@ -171,12 +185,12 @@ const ChatInterface = forwardRef<ChatInterfaceRef>((_, ref) => {
             >
               <Avatar role={message.role} />
               {message.role === 'user' ? (
-                <div className="lk-chat-bubble-user max-w-md">
+                <div className="lk-chat-bubble-user max-w-xl">
                   <p className="text-sm leading-relaxed">{message.content}</p>
                 </div>
               ) : (
                 <div
-                  className={`ai-message lk-chat-bubble-ai px-4 py-3 max-w-2xl text-sm text-gray-800 ${
+                  className={`ai-message lk-chat-bubble-ai px-5 py-4 flex-1 min-w-0 max-w-[60rem] text-sm text-gray-800 ${
                     isLoading && idx === messages.length - 1 ? 'streaming-cursor' : ''
                   }`}
                 >
@@ -197,15 +211,23 @@ const ChatInterface = forwardRef<ChatInterfaceRef>((_, ref) => {
             <TypingIndicator />
           </div>
         )}
+        </div>
       </div>
 
       {messages.length === 0 && (
-        <div className="px-4 md:px-8 pb-3 flex flex-wrap gap-2">
+        <div className="px-4 md:px-8 pb-3 mx-auto w-full max-w-6xl">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-lk-maroon/50 dark:text-lk-gold/50 mb-2">
+            Popular questions
+          </p>
+          <div className="flex flex-wrap gap-2">
           {QUICK_QUESTIONS.map((q, i) => (
             <button
               key={q}
               type="button"
-              onClick={() => append({ role: 'user', content: q })}
+              onClick={() => {
+                lastQueryRef.current = q
+                append({ role: 'user', content: q })
+              }}
               disabled={Boolean(rateLimitError)}
               className="lk-chip opacity-0 animate-fade-up"
               style={{ animationDelay: `${0.1 + i * 0.05}s`, animationFillMode: 'forwards' }}
@@ -213,16 +235,17 @@ const ChatInterface = forwardRef<ChatInterfaceRef>((_, ref) => {
               {q}
             </button>
           ))}
+          </div>
         </div>
       )}
 
       {rateLimitError && (
-        <div className="mx-4 md:mx-8 mb-2 px-4 py-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-sm animate-fade-up flex items-start gap-2">
+        <div className="mx-4 md:mx-8 mb-2 px-4 py-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-500/40 text-amber-900 dark:text-amber-200 text-sm animate-fade-up flex items-start gap-2">
           <span aria-hidden>⏳</span>
           <div>
             <p className="font-medium">{rateLimitError}</p>
             {retryAfter !== null && retryAfter > 0 && (
-              <p className="text-xs text-amber-700 mt-0.5">
+              <p className="text-xs text-amber-700 dark:text-amber-300/80 mt-0.5">
                 Try again in {retryAfter} second{retryAfter !== 1 ? 's' : ''}
               </p>
             )}
@@ -234,14 +257,8 @@ const ChatInterface = forwardRef<ChatInterfaceRef>((_, ref) => {
         id="chat-input-area"
         className="border-t border-lk-gold/20 dark:border-lk-gold/15 bg-white/95 dark:bg-lk-night-card/95 backdrop-blur-xl px-4 md:px-8 py-4 shadow-[0_-8px_32px_rgba(74,11,18,0.06)] dark:shadow-[0_-8px_32px_rgba(0,0,0,0.3)] transition-colors duration-300"
       >
-        <form onSubmit={handleSubmit} className="flex gap-3 items-end max-w-4xl mx-auto">
+        <form onSubmit={onFormSubmit} className="flex gap-3 items-end max-w-6xl mx-auto">
           <div className="flex-1 relative">
-            <span
-              className="absolute left-4 top-4 text-lk-maroon/30 text-sm pointer-events-none"
-              aria-hidden
-            >
-              💬
-            </span>
             <textarea
               ref={inputRef}
               value={input}
@@ -250,30 +267,33 @@ const ChatInterface = forwardRef<ChatInterfaceRef>((_, ref) => {
               placeholder="ඔබට අවශ්‍ය රජයේ සේවාව අහන්න..."
               rows={2}
               disabled={Boolean(rateLimitError)}
-              className="lk-input-field !pl-10 font-sinhala"
+              className="lk-input-field font-sinhala"
             />
           </div>
           <button
             type="submit"
             disabled={!input.trim() || isLoading || Boolean(rateLimitError)}
-            className="lk-btn-send flex-shrink-0 text-sm"
+            className="lk-btn-send flex-shrink-0 text-sm inline-flex items-center gap-2"
           >
             {isLoading ? (
-              <span className="flex items-center gap-1.5">
-                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                ...
-              </span>
+              <>
+                <span className="w-4 h-4 border-2 border-lk-maroon-dark/30 border-t-lk-maroon-dark rounded-full animate-spin" />
+                <span className="hidden sm:inline">Sending</span>
+              </>
             ) : (
-              'Send →'
+              <>
+                <span>Send</span>
+                <SendIcon size={16} strokeWidth={2} />
+              </>
             )}
           </button>
         </form>
-        <p className="text-[10px] text-gray-400 mt-2 text-center">
-          <kbd className="bg-lk-sand px-1.5 py-0.5 rounded text-[9px] border border-lk-maroon/10">
+        <p className="text-[10px] text-gray-400 dark:text-lk-cream/40 mt-2 text-center">
+          <kbd className="bg-lk-sand dark:bg-lk-night-elevated dark:text-lk-cream/70 px-1.5 py-0.5 rounded text-[9px] border border-lk-maroon/10 dark:border-lk-gold/15">
             Enter
           </kbd>{' '}
           send ·{' '}
-          <kbd className="bg-lk-sand px-1.5 py-0.5 rounded text-[9px] border border-lk-maroon/10">
+          <kbd className="bg-lk-sand dark:bg-lk-night-elevated dark:text-lk-cream/70 px-1.5 py-0.5 rounded text-[9px] border border-lk-maroon/10 dark:border-lk-gold/15">
             Shift+Enter
           </kbd>{' '}
           new line
@@ -287,13 +307,13 @@ function Avatar({ role }: { role: string }) {
   const isUser = role === 'user'
   return (
     <div
-      className={`w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0 text-base shadow-lk-premium transition-transform duration-200 hover:scale-105 ${
+      className={`w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lk-premium transition-transform duration-200 hover:scale-105 ${
         isUser
           ? 'bg-gradient-to-br from-lk-gold via-lk-gold-light to-lk-gold text-lk-maroon-dark ring-2 ring-lk-gold/40'
-          : 'bg-gradient-to-br from-lk-maroon via-lk-maroon-dark to-[#3a0910] text-white ring-2 ring-lk-maroon/25'
+          : 'bg-gradient-to-br from-lk-maroon via-lk-maroon-dark to-[#3a0910] ring-2 ring-lk-maroon/25'
       }`}
     >
-      {isUser ? '👤' : '🇱🇰'}
+      {isUser ? <UserIcon size={18} strokeWidth={2} /> : <LionMotif size={30} variant="gold" />}
     </div>
   )
 }
@@ -305,11 +325,11 @@ function TypingIndicator() {
         {[0, 1, 2].map((i) => (
           <span
             key={i}
-            className="w-2 h-2 rounded-full bg-lk-maroon/50 animate-bounce"
+            className="w-2 h-2 rounded-full bg-lk-maroon/50 dark:bg-lk-gold/60 animate-bounce"
             style={{ animationDelay: `${i * 0.12}s`, animationDuration: '0.6s' }}
           />
         ))}
-        <span className="ml-2 text-xs text-gray-400 animate-pulse-soft">Thinking...</span>
+        <span className="ml-2 text-xs text-gray-400 dark:text-lk-cream/45 animate-pulse-soft">Thinking...</span>
       </div>
     </div>
   )

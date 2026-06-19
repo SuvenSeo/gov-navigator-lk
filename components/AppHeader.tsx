@@ -3,6 +3,7 @@
 import LionMotif from '@/components/LionMotif'
 import LkTricolorBar from '@/components/LkTricolorBar'
 import ThemeToggle from '@/components/ThemeToggle'
+import { BoltIcon, ScaleIcon } from '@/components/Icons'
 
 interface AppHeaderProps {
   onQuickAsk: (query: string) => void
@@ -63,13 +64,10 @@ export default function AppHeader({
               </div>
               <div className="min-w-0">
                 <h1 className="text-lg md:text-xl font-black leading-tight tracking-tight">
-                  GovNav{' '}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-lk-gold-light to-lk-gold">
-                    LK
-                  </span>
+                  Gov<span className="text-transparent bg-clip-text bg-gradient-to-r from-lk-gold-light to-lk-gold">Companion</span>
                 </h1>
                 <p className="font-sinhala text-[11px] md:text-xs text-white/65 leading-snug truncate">
-                  රජයේ සේවා සොයාගන්න
+                  ඔබගේ විශ්වස්ත රජ සහකරු
                 </p>
               </div>
             </div>
@@ -102,8 +100,9 @@ export default function AppHeader({
       <div className="lk-gold-line" />
 
       <div className="bg-gradient-to-r from-lk-maroon-dark via-[#3d0a11] to-lk-maroon-dark dark:from-lk-night dark:via-lk-night-card dark:to-lk-night px-4 md:px-6 py-2 flex items-center gap-2 overflow-x-auto scrollbar-none border-b border-lk-gold/10">
-        <span className="text-[10px] text-lk-gold font-bold uppercase tracking-widest flex-shrink-0">
-          ⚡ Quick ask
+        <span className="text-[10px] text-lk-gold font-bold uppercase tracking-widest flex-shrink-0 inline-flex items-center gap-1.5">
+          <BoltIcon size={12} strokeWidth={2.25} />
+          Quick ask
         </span>
         <div className="flex items-center gap-2 flex-1 min-w-0">
           {QUICK_LINKS.map(({ label, q }) => (
@@ -121,9 +120,10 @@ export default function AppHeader({
           <button
             type="button"
             onClick={onOpenCompare}
-            className="flex-shrink-0 text-[11px] font-bold text-lk-maroon-dark bg-gradient-to-r from-lk-gold to-lk-gold-light hover:from-lk-gold-light hover:to-lk-gold px-3.5 py-1.5 rounded-full transition-all duration-200 hover:-translate-y-0.5 active:scale-95 shadow-lk-glow"
+            className="flex-shrink-0 text-[11px] font-bold text-lk-maroon-dark bg-gradient-to-r from-lk-gold to-lk-gold-light hover:from-lk-gold-light hover:to-lk-gold px-3.5 py-1.5 rounded-full transition-all duration-200 hover:-translate-y-0.5 active:scale-95 shadow-lk-glow inline-flex items-center gap-1.5"
           >
-            ⚖️ Compare
+            <ScaleIcon size={13} strokeWidth={2} />
+            Compare
           </button>
         )}
       </div>

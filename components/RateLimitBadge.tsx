@@ -36,8 +36,8 @@ export default function RateLimitBadge() {
     <div
       className={`text-[10px] px-2 py-0.5 rounded-full border transition-colors duration-300 ${
         low
-          ? 'border-amber-300 bg-amber-50 text-amber-800'
-          : 'border-lk-maroon/15 bg-lk-cream text-gray-500'
+          ? 'border-amber-300 bg-amber-50 text-amber-800 dark:border-amber-500/40 dark:bg-amber-950/40 dark:text-amber-200'
+          : 'border-lk-maroon/15 bg-lk-cream text-gray-500 dark:border-lk-gold/20 dark:bg-lk-night-elevated dark:text-lk-cream/60'
       }`}
       title="Messages remaining this hour (fair use for all users)"
     >

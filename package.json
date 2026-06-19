@@ -1,7 +1,8 @@
 {
-  "name": "gov-navigator-lk",
-  "version": "0.1.0",
+  "name": "govcompanion",
+  "version": "1.0.0",
   "private": true,
+  "description": "GovCompanion: Your trusted government services guide for Sri Lanka",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

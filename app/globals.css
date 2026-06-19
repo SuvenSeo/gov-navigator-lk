@@ -135,7 +135,7 @@ body {
   }
 
   .lk-input-field {
-    @apply flex-1 resize-none rounded-2xl border-2 px-4 py-3.5 text-sm transition-all duration-300;
+    @apply w-full resize-none rounded-2xl border-2 px-4 py-3.5 text-sm transition-all duration-300;
     @apply border-lk-maroon/10 bg-white/90 text-gray-800 placeholder-gray-400;
     @apply dark:border-lk-gold/20 dark:bg-lk-night-elevated dark:text-lk-cream dark:placeholder-lk-cream/40;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
@@ -145,6 +145,15 @@ body {
     @apply outline-none border-lk-gold/60 ring-4 ring-lk-gold/15 bg-white;
     @apply dark:ring-lk-gold/25 dark:bg-lk-night-card;
   }
+}
+
+/* Hide scrollbar utility (used on horizontal quick-ask row) */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }
 
 /* Smooth scrollbar */
@@ -362,22 +371,6 @@ body {
   }
 }
 
-.hero-section-wrapper {
-  overflow: hidden;
-  transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-  max-height: 520px;
-}
-
-.hero-section-wrapper.is-collapsed {
-  max-height: 0;
-  opacity: 0;
-}
-
-.hero-section-wrapper.is-collapsed-bar {
-  max-height: 40px;
-  opacity: 1;
-}
-
 /* Dark mode markdown sections */
 .dark .md-section-docs {
   @apply text-blue-200 bg-blue-950/40 border-blue-500/50;
@@ -396,6 +389,21 @@ body {
 }
 .dark .ai-message strong {
   color: #f5d060;
+}
+.dark .ai-message h1,
+.dark .ai-message h2,
+.dark .ai-message h3 {
+  color: #f5d060;
+}
+.dark .ai-message em {
+  color: #a89b9f;
+}
+.dark .ai-message code {
+  background: rgba(212, 160, 23, 0.12);
+  color: #f5d060;
+}
+.dark .ai-message hr {
+  border-top-color: rgba(212, 160, 23, 0.2);
 }
 .dark .chat-scroll::-webkit-scrollbar-thumb {
   background: rgba(212, 160, 23, 0.25);
