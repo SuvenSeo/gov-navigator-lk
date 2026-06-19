@@ -256,7 +256,7 @@ const ChatInterface = forwardRef<ChatInterfaceRef>((_, ref) => {
           <button
             type="submit"
             disabled={!input.trim() || isLoading || Boolean(rateLimitError)}
-            className="lk-btn-primary flex-shrink-0 text-sm"
+            className="lk-btn-send flex-shrink-0 text-sm"
           >
             {isLoading ? (
               <span className="flex items-center gap-1.5">

@@ -44,6 +44,7 @@ export default function Home() {
         <HeroSection onStartQuery={scrollToChat} onVisibilityChange={onHeroVisibilityChange} />
 
         <PageTransition layoutKey={layoutKey}>
+          <div className="flex flex-1 min-h-0 w-full">
           {sidebarOpen && (
             <button
               type="button"
@@ -61,9 +62,10 @@ export default function Home() {
 
           <div className="relative flex-1 flex flex-col min-w-0 overflow-hidden">
             <AmbientBackground />
-            <div className="relative flex-1 flex flex-col min-h-0 bg-gradient-to-b from-white/40 via-lk-cream/30 to-lk-sand/40 dark:from-lk-night/50 dark:via-lk-night-card/30 dark:to-lk-night transition-colors duration-300">
+            <div className="relative flex-1 flex flex-col min-h-0 bg-gradient-to-br from-lk-cream/80 via-lk-sand/40 to-lk-cream/60 dark:from-lk-night dark:via-lk-night-card/80 dark:to-lk-night transition-colors duration-300 border-l border-lk-maroon/5 dark:border-lk-gold/10">
               <ChatInterface ref={chatRef} />
             </div>
+          </div>
           </div>
         </PageTransition>
 

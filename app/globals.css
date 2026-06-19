@@ -55,11 +55,15 @@ body {
   }
 
   .lk-btn-primary {
-    @apply relative overflow-hidden bg-lk-maroon text-white font-semibold rounded-xl px-5 py-3 shadow-lk-soft transition-all duration-200;
+    @apply relative overflow-hidden bg-lk-maroon text-white font-semibold rounded-xl px-5 py-3 transition-all duration-200;
+    @apply dark:bg-lk-maroon-light;
+    box-shadow: 0 4px 24px -4px rgba(107, 15, 26, 0.12);
   }
 
   .lk-btn-primary:hover:not(:disabled) {
-    @apply bg-lk-maroon-light shadow-lk-glow -translate-y-0.5;
+    @apply bg-lk-maroon-light -translate-y-0.5;
+    @apply dark:bg-lk-maroon;
+    box-shadow: 0 0 40px -8px rgba(212, 160, 23, 0.35);
   }
 
   .lk-btn-primary:active:not(:disabled) {
@@ -67,7 +71,30 @@ body {
   }
 
   .lk-btn-primary:disabled {
-    @apply opacity-40 cursor-not-allowed;
+    @apply opacity-50 cursor-not-allowed bg-lk-maroon/60 text-white/70;
+    @apply dark:bg-lk-night-elevated dark:text-lk-cream/30;
+  }
+
+  .lk-btn-send {
+    @apply relative overflow-hidden font-bold rounded-xl px-5 py-3 transition-all duration-200 flex-shrink-0;
+    @apply bg-gradient-to-r from-lk-gold via-lk-gold-light to-lk-gold text-lk-maroon-dark;
+    box-shadow: 0 0 40px -8px rgba(212, 160, 23, 0.35);
+  }
+
+  .lk-btn-send:hover:not(:disabled) {
+    @apply -translate-y-0.5 shadow-[0_8px_24px_-4px_rgba(212,160,23,0.5)];
+  }
+
+  .lk-btn-send:disabled {
+    @apply cursor-not-allowed;
+    background: linear-gradient(135deg, rgba(212, 160, 23, 0.35) 0%, rgba(245, 208, 96, 0.25) 100%);
+    color: rgba(74, 11, 18, 0.45);
+    box-shadow: none;
+  }
+
+  .dark .lk-btn-send:disabled {
+    background: linear-gradient(135deg, rgba(212, 160, 23, 0.22) 0%, rgba(245, 208, 96, 0.12) 100%);
+    color: rgba(255, 249, 242, 0.35);
   }
 
   .lk-chip {
@@ -82,29 +109,36 @@ body {
   }
 
   .lk-glass-premium {
-    @apply bg-white/90 backdrop-blur-xl border border-white/70 shadow-lk-premium;
-    @apply dark:bg-lk-night-elevated/95 dark:border-lk-gold/20 dark:shadow-[0_8px_32px_-8px_rgba(0,0,0,0.5)];
+    @apply bg-white/90 backdrop-blur-xl border border-white/70;
+    @apply dark:bg-lk-night-elevated/95 dark:border-lk-gold/20;
+    box-shadow: 0 8px 32px -8px rgba(107, 15, 26, 0.18), 0 0 0 1px rgba(212, 160, 23, 0.08);
+  }
+
+  .dark .lk-glass-premium {
+    box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.5);
   }
 
   .lk-chat-bubble-ai {
-    @apply lk-glass-premium rounded-2xl rounded-tl-md border-l-4 border-l-lk-gold shadow-lk-premium;
+    @apply lk-glass-premium rounded-2xl rounded-tl-md border-l-4 border-l-lk-gold;
     @apply dark:text-lk-cream/95;
   }
 
   .lk-chat-bubble-user {
-    @apply rounded-2xl rounded-tr-md px-4 py-3 shadow-lk-soft text-white;
+    @apply rounded-2xl rounded-tr-md px-4 py-3 text-white;
     background: linear-gradient(135deg, #6b0f1a 0%, #4a0b12 55%, #5c1620 100%);
     box-shadow: 0 4px 20px -4px rgba(107, 15, 26, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
   }
 
   .lk-stat-badge {
-    @apply inline-flex items-center gap-2 text-xs md:text-sm font-bold border border-lk-gold/40 bg-white/10 backdrop-blur-md px-4 py-2 rounded-2xl shadow-lk-inner;
+    @apply inline-flex items-center gap-2 text-xs md:text-sm font-bold border border-lk-gold/40 bg-white/10 backdrop-blur-md px-4 py-2 rounded-2xl;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
   }
 
   .lk-input-field {
-    @apply flex-1 resize-none rounded-2xl border-2 px-4 py-3.5 text-sm shadow-lk-inner transition-all duration-300;
+    @apply flex-1 resize-none rounded-2xl border-2 px-4 py-3.5 text-sm transition-all duration-300;
     @apply border-lk-maroon/10 bg-white/90 text-gray-800 placeholder-gray-400;
     @apply dark:border-lk-gold/20 dark:bg-lk-night-elevated dark:text-lk-cream dark:placeholder-lk-cream/40;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
   }
 
   .lk-input-field:focus {

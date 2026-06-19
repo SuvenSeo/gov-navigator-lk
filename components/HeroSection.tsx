@@ -13,7 +13,7 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ onStartQuery, onVisibilityChange }: HeroSectionProps) {
-  const [expanded, setExpanded] = useState(true)
+  const [visible, setVisible] = useState(true)
   const [closing, setClosing] = useState(false)
   const total = getTotalServiceCount()
 
@@ -27,7 +27,7 @@ export default function HeroSection({ onStartQuery, onVisibilityChange }: HeroSe
   useEffect(() => {
     try {
       if (localStorage.getItem(STORAGE_KEY) === '1') {
-        setExpanded(false)
+        setVisible(false)
         onVisibilityChange?.(false)
       }
     } catch {
@@ -38,7 +38,7 @@ export default function HeroSection({ onStartQuery, onVisibilityChange }: HeroSe
   const dismiss = () => {
     setClosing(true)
     setTimeout(() => {
-      setExpanded(false)
+      setVisible(false)
       setClosing(false)
       onVisibilityChange?.(false)
       try {
@@ -46,11 +46,16 @@ export default function HeroSection({ onStartQuery, onVisibilityChange }: HeroSe
       } catch {
         /* ignore */
       }
-    }, 450)
+    }, 400)
+  }
+
+  const handleStart = () => {
+    onStartQuery()
+    dismiss()
   }
 
   const restore = () => {
-    setExpanded(true)
+    setVisible(true)
     onVisibilityChange?.(true)
     try {
       localStorage.removeItem(STORAGE_KEY)
@@ -59,17 +64,17 @@ export default function HeroSection({ onStartQuery, onVisibilityChange }: HeroSe
     }
   }
 
-  if (!expanded && !closing) {
+  if (!visible && !closing) {
     return (
       <button
         type="button"
         onClick={restore}
-        className="flex-shrink-0 w-full text-center py-2.5 text-[11px] font-semibold text-lk-maroon/80 hover:text-lk-maroon dark:text-lk-gold/70 dark:hover:text-lk-gold-light bg-gradient-to-r from-lk-gold/15 via-lk-cream to-lk-emerald/10 dark:from-lk-gold/10 dark:via-lk-night-card dark:to-lk-emerald/10 border-b border-lk-gold/25 transition-all hover:shadow-sm animate-fade-in"
+        className="flex-shrink-0 w-full text-center py-2 text-[11px] font-semibold text-lk-maroon/80 hover:text-lk-maroon dark:text-lk-gold/70 dark:hover:text-lk-gold-light bg-gradient-to-r from-lk-gold/12 via-lk-cream to-lk-emerald/8 dark:from-lk-gold/8 dark:via-lk-night-card dark:to-lk-emerald/8 border-b border-lk-gold/20 transition-colors"
       >
-        <span className="inline-flex items-center gap-2">
-          <LionMotif size={20} variant="maroon" className="dark:hidden" />
-          <LionMotif size={20} variant="gold" className="hidden dark:block" />
-          Show Sri Lanka welcome banner
+        <span className="inline-flex items-center justify-center gap-2">
+          <LionMotif size={18} variant="maroon" className="dark:hidden" />
+          <LionMotif size={18} variant="gold" className="hidden dark:block" />
+          Show welcome banner
         </span>
       </button>
     )
@@ -77,92 +82,67 @@ export default function HeroSection({ onStartQuery, onVisibilityChange }: HeroSe
 
   return (
     <div
-      className={`flex-shrink-0 overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-        closing ? 'max-h-0 opacity-0' : 'max-h-[520px] opacity-100'
+      className={`flex-shrink-0 overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        closing ? 'max-h-0 opacity-0' : 'max-h-[220px] md:max-h-[148px] opacity-100'
       }`}
     >
       <section className="hero-batik relative overflow-hidden">
         <LkTricolorBar />
-        <div
-          className="absolute inset-0 bg-gradient-to-br from-lk-maroon via-[#5a1018] to-lk-maroon-dark dark:from-[#1a0508] dark:via-[#2d0a10] dark:to-[#0f0a0c] animate-gradient-shift"
-          style={{ backgroundSize: '200% 200%' }}
+        <div className="absolute inset-0 bg-gradient-to-r from-lk-maroon via-[#5a1018] to-lk-maroon-dark dark:from-[#1a0508] dark:via-[#2d0a10] dark:to-[#0f0a0c]" />
+        <LionMotif
+          size={140}
+          variant="gold"
+          opacity={0.07}
+          className="absolute -right-4 top-1/2 -translate-y-1/2 pointer-events-none hidden lg:block"
         />
 
-        <LionMotif
-          size={200}
-          variant="gold"
-          opacity={0.08}
-          className="absolute -left-8 -bottom-8 pointer-events-none hidden sm:block"
-        />
-        <LionMotif
-          size={160}
-          variant="gold"
-          opacity={0.06}
-          className="absolute -right-6 top-4 pointer-events-none hidden md:block"
-        />
-
-        <div className="relative px-4 md:px-10 py-8 md:py-10">
+        <div className="relative px-4 md:px-6 py-4 md:py-3">
           <button
             type="button"
             onClick={dismiss}
-            className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/20 hover:bg-black/30 text-white/80 text-lg backdrop-blur-sm border border-white/10 transition-all hover:scale-105 hover:rotate-90 duration-300"
+            className="absolute top-2 right-2 md:top-3 md:right-3 z-10 w-8 h-8 rounded-full bg-black/25 hover:bg-black/40 text-white/80 text-base backdrop-blur-sm border border-white/10 transition-all hover:scale-105"
             aria-label="Dismiss welcome banner"
           >
             ×
           </button>
 
-          <div className="max-w-3xl mx-auto text-center text-white">
-            <div className="flex justify-center mb-4">
-              <div className="relative">
-                <LionMotif size={56} variant="gold" className="animate-float" />
-                <span className="absolute -bottom-1 -right-1 text-lg">🇱🇰</span>
+          <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 text-white pr-10">
+            <div className="flex items-start gap-3 md:min-w-0 md:flex-1">
+              <LionMotif size={44} variant="gold" className="flex-shrink-0 hidden sm:block animate-float" />
+              <div className="min-w-0 text-left">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-lk-gold-light/90 mb-1">
+                  Sri Lanka&apos;s AI Government Guide
+                </p>
+                <h2 className="text-lg sm:text-xl md:text-2xl font-black leading-tight tracking-tight">
+                  Never waste a day at a{' '}
+                  <span className="text-lk-gold-light">government office</span> again
+                </h2>
+                <p className="font-sinhala text-xs md:text-sm text-white/70 mt-1 truncate">
+                  ලේසියෙන්ම රජයේ සේවාවන් ලබා ගන්නේ කෙසේද?
+                </p>
               </div>
             </div>
 
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/15 rounded-full px-4 py-1.5 mb-3 text-[11px] font-semibold tracking-wide uppercase text-lk-gold-light">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse-soft" />
-              Sri Lanka&apos;s AI Government Guide
-            </div>
-
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight leading-[1.15]">
-              Never Waste A Day At A{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-lk-gold-light via-lk-gold to-lk-gold-light">
-                Government Office
-              </span>{' '}
-              Again
-            </h2>
-
-            <p className="font-sinhala text-base md:text-lg text-white/80 mt-3 font-medium">
-              ලේසියෙන්ම රජයේ සේවාවන් ලබා ගන්නේ කෙසේද?
-            </p>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 md:gap-3 mt-6 max-w-2xl mx-auto">
-              {stats.map(({ icon, value, label }, i) => (
+            <div className="flex flex-wrap items-center gap-2 md:gap-2.5 md:flex-shrink-0">
+              {stats.map(({ icon, value, label }) => (
                 <div
                   key={label}
-                  className="lk-stat-badge flex-col !py-3 !rounded-xl opacity-0 animate-fade-up"
-                  style={{ animationDelay: `${0.08 + i * 0.07}s`, animationFillMode: 'forwards' }}
+                  className="inline-flex items-center gap-1.5 text-[10px] font-bold border border-lk-gold/35 bg-white/8 backdrop-blur-sm px-2.5 py-1.5 rounded-lg"
                 >
-                  <span className="text-lg" aria-hidden>
-                    {icon}
-                  </span>
-                  <span className="text-lg md:text-xl font-black text-lk-gold-light leading-none">
-                    {value}
-                  </span>
-                  <span className="text-[10px] text-white/60 font-medium uppercase tracking-wider">
-                    {label}
-                  </span>
+                  <span aria-hidden>{icon}</span>
+                  <span className="text-lk-gold-light">{value}</span>
+                  <span className="text-white/50 font-medium uppercase">{label}</span>
                 </div>
               ))}
             </div>
 
             <button
               type="button"
-              onClick={onStartQuery}
-              className="group mt-7 inline-flex items-center gap-2.5 bg-gradient-to-r from-lk-gold via-lk-gold-light to-lk-gold text-lk-maroon-dark font-extrabold px-8 py-3.5 rounded-full shadow-lk-glow transition-all duration-300 hover:-translate-y-1 active:scale-[0.98] text-sm md:text-base"
+              onClick={handleStart}
+              className="group flex-shrink-0 w-full md:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-lk-gold via-lk-gold-light to-lk-gold text-lk-maroon-dark font-extrabold px-5 py-2.5 rounded-full shadow-lk-glow transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98] text-sm"
             >
-              <span>Start Your Query</span>
-              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+              Start Your Query
+              <span className="transition-transform group-hover:translate-x-0.5">→</span>
             </button>
           </div>
         </div>

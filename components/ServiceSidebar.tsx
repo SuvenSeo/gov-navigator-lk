@@ -193,7 +193,7 @@ export default function ServiceSidebar({
         )}
       </nav>
 
-      <div className="px-4 py-3 border-t border-white/10 bg-black/15">
+      <div className="px-4 py-3 border-t border-white/10 bg-black/15 hidden lg:block">
         <p className="text-[10px] text-white/40 leading-relaxed">
           📞 Call <strong className="text-lk-gold-light">1919</strong> (GIC) or check{' '}
           <a

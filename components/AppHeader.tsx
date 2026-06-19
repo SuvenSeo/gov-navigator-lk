@@ -101,26 +101,27 @@ export default function AppHeader({
 
       <div className="lk-gold-line" />
 
-      <div className="bg-gradient-to-r from-lk-maroon-dark via-[#3d0a11] to-lk-maroon-dark dark:from-lk-night dark:via-lk-night-card dark:to-lk-night px-4 md:px-6 py-2.5 flex items-center gap-2 overflow-x-auto scrollbar-none border-b border-lk-gold/10">
+      <div className="bg-gradient-to-r from-lk-maroon-dark via-[#3d0a11] to-lk-maroon-dark dark:from-lk-night dark:via-lk-night-card dark:to-lk-night px-4 md:px-6 py-2 flex items-center gap-2 overflow-x-auto scrollbar-none border-b border-lk-gold/10">
         <span className="text-[10px] text-lk-gold font-bold uppercase tracking-widest flex-shrink-0">
           ⚡ Quick ask
         </span>
-        {QUICK_LINKS.map(({ label, q }, i) => (
-          <button
-            key={label}
-            type="button"
-            onClick={() => onQuickAsk(q)}
-            className="flex-shrink-0 text-[11px] font-medium text-white/75 hover:text-white bg-white/5 hover:bg-lk-gold/25 border border-white/10 hover:border-lk-gold/50 px-3.5 py-1.5 rounded-full transition-all duration-200 hover:-translate-y-0.5 active:scale-95 shadow-sm"
-            style={{ animationDelay: `${i * 0.04}s` }}
-          >
-            {label}
-          </button>
-        ))}
+        <div className="flex items-center gap-2 flex-1 min-w-0">
+          {QUICK_LINKS.map(({ label, q }) => (
+            <button
+              key={label}
+              type="button"
+              onClick={() => onQuickAsk(q)}
+              className="flex-shrink-0 text-[11px] font-medium text-white/75 hover:text-white bg-white/5 hover:bg-lk-gold/25 border border-white/10 hover:border-lk-gold/50 px-3 py-1 rounded-full transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
+            >
+              {label}
+            </button>
+          ))}
+        </div>
         {onOpenCompare && (
           <button
             type="button"
             onClick={onOpenCompare}
-            className="flex-shrink-0 text-[11px] font-bold text-lk-maroon-dark bg-gradient-to-r from-lk-gold to-lk-gold-light hover:from-lk-gold-light hover:to-lk-gold px-3.5 py-1.5 rounded-full transition-all duration-200 hover:-translate-y-0.5 active:scale-95 shadow-lk-glow ml-auto sm:ml-1"
+            className="flex-shrink-0 text-[11px] font-bold text-lk-maroon-dark bg-gradient-to-r from-lk-gold to-lk-gold-light hover:from-lk-gold-light hover:to-lk-gold px-3.5 py-1.5 rounded-full transition-all duration-200 hover:-translate-y-0.5 active:scale-95 shadow-lk-glow"
           >
             ⚖️ Compare
           </button>
