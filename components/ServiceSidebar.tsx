@@ -85,26 +85,30 @@ export default function ServiceSidebar({
 
   const panelClasses = `
     w-72 flex-shrink-0 text-white flex flex-col overflow-hidden
-    bg-gradient-to-b from-lk-maroon-dark via-lk-maroon-dark to-[#3a0910]
-    lg:relative lg:translate-x-0 lg:shadow-lk-soft
+    bg-gradient-to-b from-[#2d080e] via-lk-maroon-dark to-[#1f0509]
+    lg:relative lg:translate-x-0 shadow-lk-premium
     fixed inset-y-0 left-0 z-40 transform transition-transform duration-300 ease-out
+    border-r border-lk-gold/15
     ${mobileOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full lg:translate-x-0'}
   `
 
   return (
     <aside className={panelClasses} aria-label="Government services browser">
-      <div className="px-4 py-5 border-b border-white/10 bg-black/10">
-        <div className="flex items-center justify-between mb-1">
-          <p className="text-xs font-bold text-lk-gold-light uppercase tracking-widest">
-            Browse Services
-          </p>
-          <span className="text-[10px] bg-lk-gold/20 text-lk-gold-light px-2 py-0.5 rounded-full font-semibold">
+      <div className="px-4 py-5 border-b border-lk-gold/15 bg-gradient-to-b from-black/25 to-transparent">
+        <div className="flex items-center gap-2 mb-2">
+          <span className="text-xl" aria-hidden>
+            🦁
+          </span>
+          <div>
+            <p className="text-xs font-black text-lk-gold-light uppercase tracking-widest">
+              Browse Services
+            </p>
+            <p className="font-sinhala text-[10px] text-white/45">රජයේ සේවා</p>
+          </div>
+          <span className="ml-auto text-[10px] bg-lk-gold/25 text-lk-gold-light px-2.5 py-1 rounded-full font-black border border-lk-gold/30">
             {totalCount}
           </span>
         </div>
-        <p className="text-[11px] text-white/50 mb-3 font-sinhala">
-          රජයේ සේවා {totalCount}ක් — click to ask
-        </p>
         <div className="relative">
           <span
             className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 text-xs"
@@ -148,7 +152,9 @@ export default function ServiceSidebar({
                 <button
                   type="button"
                   onClick={() => setExpanded(isOpen ? null : cat)}
-                  className="w-full flex items-center justify-between px-4 py-2.5 hover:bg-white/10 transition-all duration-200 text-left group"
+                  className={`w-full flex items-center justify-between px-4 py-3 transition-all duration-200 text-left group ${
+                    isOpen ? 'sidebar-category-open' : 'hover:bg-white/8'
+                  }`}
                 >
                   <span className="flex items-center gap-2 text-sm font-semibold text-white/90 group-hover:text-white">
                     <span className="transition-transform duration-200 group-hover:scale-110">

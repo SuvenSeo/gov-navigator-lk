@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Sinhala:wght@400;500;600;700;800&display=swap');
 
 :root {
   --font-inter: 'Inter', system-ui, sans-serif;
@@ -58,6 +58,32 @@ body {
 
   .lk-glass {
     @apply bg-white/85 backdrop-blur-md border border-white/60;
+  }
+
+  .lk-glass-premium {
+    @apply bg-white/90 backdrop-blur-xl border border-white/70 shadow-lk-premium;
+  }
+
+  .lk-chat-bubble-ai {
+    @apply lk-glass-premium rounded-2xl rounded-tl-md border-l-4 border-l-lk-gold shadow-lk-premium;
+  }
+
+  .lk-chat-bubble-user {
+    @apply rounded-2xl rounded-tr-md px-4 py-3 shadow-lk-soft text-white;
+    background: linear-gradient(135deg, #6b0f1a 0%, #4a0b12 55%, #5c1620 100%);
+    box-shadow: 0 4px 20px -4px rgba(107, 15, 26, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  .lk-stat-badge {
+    @apply inline-flex items-center gap-2 text-xs md:text-sm font-bold border border-lk-gold/40 bg-white/10 backdrop-blur-md px-4 py-2 rounded-2xl shadow-lk-inner;
+  }
+
+  .lk-input-field {
+    @apply flex-1 resize-none rounded-2xl border-2 border-lk-maroon/10 bg-white/90 px-4 py-3.5 text-sm text-gray-800 placeholder-gray-400 shadow-lk-inner transition-all duration-300;
+  }
+
+  .lk-input-field:focus {
+    @apply outline-none border-lk-gold/60 ring-4 ring-lk-gold/15 bg-white;
   }
 }
 
@@ -132,10 +158,59 @@ body {
     -45deg,
     transparent,
     transparent 12px,
-    rgba(212, 160, 23, 0.04) 12px,
-    rgba(212, 160, 23, 0.04) 24px
+    rgba(212, 160, 23, 0.05) 12px,
+    rgba(212, 160, 23, 0.05) 24px
   );
   pointer-events: none;
+}
+
+.hero-batik::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 100%, rgba(212, 160, 23, 0.15), transparent 50%),
+    radial-gradient(ellipse 60% 50% at 90% 20%, rgba(0, 95, 78, 0.12), transparent 45%),
+    radial-gradient(ellipse 50% 40% at 50% 0%, rgba(255, 255, 255, 0.06), transparent 40%);
+  pointer-events: none;
+}
+
+/* Ambient floating orbs */
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  animation: glow-pulse 6s ease-in-out infinite;
+}
+.ambient-orb-1 {
+  width: 280px;
+  height: 280px;
+  top: -80px;
+  right: -60px;
+  background: rgba(212, 160, 23, 0.18);
+  animation-delay: 0s;
+}
+.ambient-orb-2 {
+  width: 220px;
+  height: 220px;
+  bottom: 10%;
+  left: -40px;
+  background: rgba(107, 15, 26, 0.12);
+  animation-delay: 2s;
+}
+.ambient-orb-3 {
+  width: 180px;
+  height: 180px;
+  top: 40%;
+  right: 15%;
+  background: rgba(0, 95, 78, 0.1);
+  animation-delay: 4s;
+}
+
+/* Sidebar category active glow */
+.sidebar-category-open {
+  box-shadow: inset 3px 0 0 #d4a017;
+  background: linear-gradient(90deg, rgba(212, 160, 23, 0.08), transparent);
 }
 
 /* Color-coded AI response sections */

@@ -1,5 +1,7 @@
 'use client'
 
+import LkTricolorBar from '@/components/LkTricolorBar'
+
 interface AppHeaderProps {
   onQuickAsk: (query: string) => void
   onToggleSidebar?: () => void
@@ -19,40 +21,55 @@ const OFFICIAL_LINKS = [
   { label: 'GIC 1919', href: 'https://gic.gov.lk' },
   { label: 'drp.gov.lk', href: 'https://drp.gov.lk' },
   { label: 'immigration.gov.lk', href: 'https://www.immigration.gov.lk' },
-  { label: 'dmt.gov.lk', href: 'https://dmt.gov.lk' },
 ]
 
-export default function AppHeader({ onQuickAsk, onToggleSidebar, sidebarOpen, onOpenCompare }: AppHeaderProps) {
+export default function AppHeader({
+  onQuickAsk,
+  onToggleSidebar,
+  sidebarOpen,
+  onOpenCompare,
+}: AppHeaderProps) {
   return (
-    <header className="flex-shrink-0 shadow-lk-soft z-20">
-      <div className="lk-gradient-header text-white">
-        <div className="flex items-center justify-between px-4 md:px-6 py-3 gap-3">
+    <header className="flex-shrink-0 z-20 shadow-lk-premium">
+      <LkTricolorBar />
+      <div className="lk-gradient-header text-white relative overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            background:
+              'radial-gradient(circle at 100% 0%, rgba(212,160,23,0.2) 0%, transparent 50%)',
+          }}
+          aria-hidden
+        />
+        <div className="relative flex items-center justify-between px-4 md:px-6 py-3 gap-3">
           <div className="flex items-center gap-3 min-w-0">
             {onToggleSidebar && (
               <button
                 type="button"
                 onClick={onToggleSidebar}
-                className="lg:hidden flex-shrink-0 w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all duration-200 active:scale-95"
+                className="lg:hidden flex-shrink-0 w-11 h-11 rounded-xl bg-white/10 hover:bg-lk-gold/25 border border-white/10 flex items-center justify-center transition-all duration-200 active:scale-95 shadow-lg"
                 aria-label={sidebarOpen ? 'Close services menu' : 'Open services menu'}
                 aria-expanded={sidebarOpen}
               >
-                <span className="text-lg">{sidebarOpen ? '✕' : '☰'}</span>
+                <span className="text-xl">{sidebarOpen ? '✕' : '☰'}</span>
               </button>
             )}
 
-            <div className="flex items-center gap-3 min-w-0 animate-fade-in">
-              <div className="relative flex-shrink-0">
-                <span className="text-3xl animate-float inline-block" aria-hidden>
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="relative flex-shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-lk-gold/30 to-lk-maroon-light/50 border border-lk-gold/30 flex items-center justify-center shadow-lk-glow animate-float">
+                <span className="text-2xl" aria-hidden>
                   🇱🇰
                 </span>
-                <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-lk-gold rounded-full border-2 border-lk-maroon-dark" />
               </div>
               <div className="min-w-0">
-                <h1 className="text-lg md:text-xl font-extrabold leading-tight tracking-tight">
-                  GovNav <span className="text-lk-gold-light">LK</span>
+                <h1 className="text-lg md:text-xl font-black leading-tight tracking-tight">
+                  GovNav{' '}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-lk-gold-light to-lk-gold">
+                    LK
+                  </span>
                 </h1>
-                <p className="font-sinhala text-[11px] md:text-xs text-white/70 leading-snug truncate">
-                  රජයේ සේවා සොයාගන්න · Your Sri Lanka government guide
+                <p className="font-sinhala text-[11px] md:text-xs text-white/65 leading-snug truncate">
+                  රජයේ සේවා සොයාගන්න
                 </p>
               </div>
             </div>
@@ -65,15 +82,15 @@ export default function AppHeader({ onQuickAsk, onToggleSidebar, sidebarOpen, on
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[11px] text-white/50 hover:text-lk-gold-light transition-colors duration-200 hover:underline underline-offset-2"
+                className="text-[11px] text-white/45 hover:text-lk-gold-light transition-colors duration-200 hover:underline underline-offset-2"
               >
                 {label}
               </a>
             ))}
-            <div className="h-4 w-px bg-white/20" />
-            <span className="text-[11px] bg-white/10 px-2.5 py-1 rounded-full text-white/80 flex items-center gap-1.5 border border-white/10">
+            <div className="h-4 w-px bg-white/15" />
+            <span className="text-[11px] bg-emerald-500/20 border border-emerald-400/30 px-2.5 py-1 rounded-full text-emerald-100 flex items-center gap-1.5 font-medium">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-soft" />
-              AI Powered
+              Live AI
             </span>
           </div>
         </div>
@@ -81,17 +98,17 @@ export default function AppHeader({ onQuickAsk, onToggleSidebar, sidebarOpen, on
 
       <div className="lk-gold-line" />
 
-      <div className="bg-lk-maroon-dark/90 px-4 md:px-6 py-2 flex items-center gap-2 overflow-x-auto scrollbar-none">
-        <span className="text-[10px] text-lk-gold/80 uppercase tracking-widest font-bold flex-shrink-0">
-          Quick ask
+      <div className="bg-gradient-to-r from-lk-maroon-dark via-[#3d0a11] to-lk-maroon-dark px-4 md:px-6 py-2.5 flex items-center gap-2 overflow-x-auto scrollbar-none border-b border-lk-gold/10">
+        <span className="text-[10px] text-lk-gold font-bold uppercase tracking-widest flex-shrink-0">
+          ⚡ Quick ask
         </span>
         {QUICK_LINKS.map(({ label, q }, i) => (
           <button
             key={label}
             type="button"
             onClick={() => onQuickAsk(q)}
-            className="flex-shrink-0 text-[11px] text-white/70 hover:text-white bg-white/5 hover:bg-lk-gold/20 hover:border-lk-gold/40 border border-transparent px-3 py-1 rounded-full transition-all duration-200 hover:-translate-y-0.5 active:scale-95 opacity-0 animate-fade-up"
-            style={{ animationDelay: `${i * 0.04}s`, animationFillMode: 'forwards' }}
+            className="flex-shrink-0 text-[11px] font-medium text-white/75 hover:text-white bg-white/5 hover:bg-lk-gold/25 border border-white/10 hover:border-lk-gold/50 px-3.5 py-1.5 rounded-full transition-all duration-200 hover:-translate-y-0.5 active:scale-95 shadow-sm"
+            style={{ animationDelay: `${i * 0.04}s` }}
           >
             {label}
           </button>
@@ -100,7 +117,7 @@ export default function AppHeader({ onQuickAsk, onToggleSidebar, sidebarOpen, on
           <button
             type="button"
             onClick={onOpenCompare}
-            className="flex-shrink-0 text-[11px] font-semibold text-lk-gold-light hover:text-white bg-lk-gold/15 hover:bg-lk-gold/25 border border-lk-gold/40 px-3 py-1 rounded-full transition-all duration-200 hover:-translate-y-0.5 active:scale-95 ml-1"
+            className="flex-shrink-0 text-[11px] font-bold text-lk-maroon-dark bg-gradient-to-r from-lk-gold to-lk-gold-light hover:from-lk-gold-light hover:to-lk-gold px-3.5 py-1.5 rounded-full transition-all duration-200 hover:-translate-y-0.5 active:scale-95 shadow-lk-glow ml-auto sm:ml-1"
           >
             ⚖️ Compare
           </button>

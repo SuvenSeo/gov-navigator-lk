@@ -14,9 +14,12 @@ export default function VerifiedSourceChip({ source }: VerifiedSourceChipProps) 
   })()
 
   return (
-    <div className="mt-2 flex flex-wrap items-center gap-2">
-      <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
-        <span aria-hidden>✓</span> Source verified
+    <div className="mt-3 pt-3 border-t border-lk-emerald/20 flex flex-wrap items-center gap-2">
+      <span className="inline-flex items-center gap-1.5 text-[10px] font-bold text-emerald-900 bg-gradient-to-r from-emerald-50 to-emerald-100/80 border border-emerald-300/60 px-2.5 py-1 rounded-full shadow-sm">
+        <span className="w-4 h-4 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[8px]">
+          ✓
+        </span>
+        Official source verified
         {source.lastVerified && (
           <span className="font-normal text-emerald-700">· {source.lastVerified}</span>
         )}

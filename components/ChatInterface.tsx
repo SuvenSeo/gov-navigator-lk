@@ -124,11 +124,15 @@ const ChatInterface = forwardRef<ChatInterfaceRef>((_, ref) => {
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
-      <div className="flex items-center justify-between px-4 md:px-8 py-2 border-b border-lk-maroon/5 bg-white/40">
-        <p className="text-xs text-gray-500 hidden sm:block">
-          Ask in <span className="font-medium text-lk-maroon">English</span> or{' '}
-          <span className="font-sinhala font-medium text-lk-maroon">සිංහල</span> — we understand
-          both
+      <div className="flex items-center justify-between px-4 md:px-8 py-2.5 border-b border-lk-maroon/8 bg-white/60 backdrop-blur-md">
+        <p className="text-xs text-gray-600 hidden sm:flex items-center gap-2">
+          <span className="inline-flex items-center gap-1 bg-lk-maroon/5 text-lk-maroon px-2 py-0.5 rounded-full font-medium">
+            EN
+          </span>
+          <span className="text-gray-300">|</span>
+          <span className="font-sinhala inline-flex items-center gap-1 bg-lk-emerald/10 text-lk-emerald px-2 py-0.5 rounded-full font-medium">
+            සිංහල
+          </span>
         </p>
         <div className="flex items-center gap-2 ml-auto">
           <RateLimitBadge />
@@ -147,7 +151,7 @@ const ChatInterface = forwardRef<ChatInterfaceRef>((_, ref) => {
       <div ref={scrollRef} className="flex-1 overflow-y-auto chat-scroll px-4 md:px-8 py-6 space-y-5">
         <div className="flex gap-3 message-enter">
           <Avatar role="assistant" />
-          <div className="ai-message lk-glass rounded-2xl rounded-tl-sm px-4 py-3 shadow-lk-card max-w-2xl border-l-4 border-l-lk-gold">
+          <div className="ai-message lk-chat-bubble-ai px-4 py-3 max-w-2xl">
             <ColoredMarkdown content={WELCOME_MESSAGE} />
           </div>
         </div>
@@ -167,12 +171,12 @@ const ChatInterface = forwardRef<ChatInterfaceRef>((_, ref) => {
             >
               <Avatar role={message.role} />
               {message.role === 'user' ? (
-                <div className="bg-gradient-to-br from-lk-maroon to-lk-maroon-dark text-white rounded-2xl rounded-tr-sm px-4 py-3 max-w-md shadow-lk-soft">
+                <div className="lk-chat-bubble-user max-w-md">
                   <p className="text-sm leading-relaxed">{message.content}</p>
                 </div>
               ) : (
                 <div
-                  className={`ai-message lk-glass rounded-2xl rounded-tl-sm px-4 py-3 shadow-lk-card max-w-2xl text-sm text-gray-800 border-l-4 border-l-lk-maroon/30 ${
+                  className={`ai-message lk-chat-bubble-ai px-4 py-3 max-w-2xl text-sm text-gray-800 ${
                     isLoading && idx === messages.length - 1 ? 'streaming-cursor' : ''
                   }`}
                 >
@@ -228,19 +232,27 @@ const ChatInterface = forwardRef<ChatInterfaceRef>((_, ref) => {
 
       <div
         id="chat-input-area"
-        className="border-t border-lk-maroon/10 bg-white/90 backdrop-blur-md px-4 md:px-8 py-4 shadow-[0_-4px_20px_rgba(74,11,18,0.04)]"
+        className="border-t border-lk-gold/20 bg-white/95 backdrop-blur-xl px-4 md:px-8 py-4 shadow-[0_-8px_32px_rgba(74,11,18,0.06)]"
       >
-        <form onSubmit={handleSubmit} className="flex gap-3 items-end">
-          <textarea
-            ref={inputRef}
-            value={input}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            placeholder="ඔබට අවශ්‍ය රජයේ සේවාව අහන්න... / Ask about any government service..."
-            rows={2}
-            disabled={Boolean(rateLimitError)}
-            className="flex-1 resize-none rounded-xl border border-lk-maroon/15 bg-lk-cream/50 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-lk-gold/40 focus:border-lk-gold transition-all duration-200 disabled:opacity-50"
-          />
+        <form onSubmit={handleSubmit} className="flex gap-3 items-end max-w-4xl mx-auto">
+          <div className="flex-1 relative">
+            <span
+              className="absolute left-4 top-4 text-lk-maroon/30 text-sm pointer-events-none"
+              aria-hidden
+            >
+              💬
+            </span>
+            <textarea
+              ref={inputRef}
+              value={input}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              placeholder="ඔබට අවශ්‍ය රජයේ සේවාව අහන්න..."
+              rows={2}
+              disabled={Boolean(rateLimitError)}
+              className="lk-input-field !pl-10 font-sinhala"
+            />
+          </div>
           <button
             type="submit"
             disabled={!input.trim() || isLoading || Boolean(rateLimitError)}
@@ -275,10 +287,10 @@ function Avatar({ role }: { role: string }) {
   const isUser = role === 'user'
   return (
     <div
-      className={`w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 text-sm shadow-lk-card transition-transform duration-200 ${
+      className={`w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0 text-base shadow-lk-premium transition-transform duration-200 hover:scale-105 ${
         isUser
-          ? 'bg-gradient-to-br from-lk-gold to-lk-gold-light text-lk-maroon-dark ring-2 ring-lk-gold/30'
-          : 'bg-gradient-to-br from-lk-maroon to-lk-maroon-dark text-white ring-2 ring-lk-maroon/20'
+          ? 'bg-gradient-to-br from-lk-gold via-lk-gold-light to-lk-gold text-lk-maroon-dark ring-2 ring-lk-gold/40'
+          : 'bg-gradient-to-br from-lk-maroon via-lk-maroon-dark to-[#3a0910] text-white ring-2 ring-lk-maroon/25'
       }`}
     >
       {isUser ? '👤' : '🇱🇰'}
@@ -288,7 +300,7 @@ function Avatar({ role }: { role: string }) {
 
 function TypingIndicator() {
   return (
-    <div className="lk-glass rounded-2xl rounded-tl-sm px-5 py-3.5 shadow-lk-card border-l-4 border-l-lk-gold">
+    <div className="lk-chat-bubble-ai px-5 py-4">
       <div className="flex gap-1.5 items-center h-5">
         {[0, 1, 2].map((i) => (
           <span
